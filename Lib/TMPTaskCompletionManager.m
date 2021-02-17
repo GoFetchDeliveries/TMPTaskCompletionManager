@@ -22,7 +22,7 @@
 
 #import "TMPTaskCompletionManager.h"
 
-typedef void (^task_t)();
+typedef void (^task_t_)();
 
 @interface TMPTaskCompletionManager()
 @property (nonatomic) NSMutableArray *taskIdentifiers;
@@ -117,7 +117,7 @@ typedef void (^task_t)();
 {
   __block UIBackgroundTaskIdentifier identifier;
   UIApplication *application = [UIApplication sharedApplication];
-  task_t eTask = ^{
+  task_t_ eTask = ^{
     if ([self.taskIdentifiers containsObject:@(identifier)]) {
       if (expirationTask) {
         expirationTask();
@@ -152,7 +152,7 @@ runBackgroundOperation:(NSOperation *)operation
 {
   __block UIBackgroundTaskIdentifier identifier;
   UIApplication *application = [UIApplication sharedApplication];
-  task_t eTask = ^{
+  task_t_ eTask = ^{
     if ([self.taskIdentifiers containsObject:@(identifier)]) {
       if (expirationTask) {
         expirationTask();
@@ -212,7 +212,7 @@ runBackgroundOperation:(NSOperation *)operation
 - (void)applicationWillTerminate
 {
   for (NSInteger i = 0; i < [self.eTasks count]; i++) {
-    ((task_t)self.eTasks[i])();
+    ((task_t_)self.eTasks[i])();
   }
 }
 

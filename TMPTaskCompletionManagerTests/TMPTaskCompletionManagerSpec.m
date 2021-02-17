@@ -14,7 +14,7 @@
 
 SPEC_BEGIN(TMPTaskCompletionManagerSpec)
 
-typedef void (^task_t)();
+typedef void (^task_t_)();
 
 describe(@"TMPTaskCompletionManagerSpec", ^{
   context(@"for calling runBackgroundTask:taskQueue:expirationTask", ^{
@@ -30,10 +30,10 @@ describe(@"TMPTaskCompletionManagerSpec", ^{
         NSOperationQueue *dQ = [NSOperationQueue mock];
         taskCompletion.defaultTaskQueue = dQ;
 
-        task_t t0 = ^{};
-        task_t t1 = ^{};
-        task_t e0 = ^{};
-        task_t e1 = ^{};
+        task_t_ t0 = ^{};
+        task_t_ t1 = ^{};
+        task_t_ e0 = ^{};
+        task_t_ e1 = ^{};
         UIBackgroundTaskIdentifier btid;
 
         [[dQ should]
@@ -66,10 +66,10 @@ describe(@"TMPTaskCompletionManagerSpec", ^{
         taskCompletion.defaultTaskQueue = dQ;
         NSOperationQueue *mQ = [NSOperationQueue mock];
 
-        task_t t0 = ^{};
-        task_t t1 = ^{};
-        task_t e0 = ^{};
-        task_t e1 = ^{};
+        task_t_ t0 = ^{};
+        task_t_ t1 = ^{};
+        task_t_ e0 = ^{};
+        task_t_ e1 = ^{};
         UIBackgroundTaskIdentifier btid;
 
         [[dQ should]
@@ -119,7 +119,7 @@ describe(@"TMPTaskCompletionManagerSpec", ^{
               [NSThread sleepForTimeInterval:1];
               o0Expired = @"done";
             }];
-        task_t e0 = ^{o0Expired = @"expired";};
+        task_t_ e0 = ^{o0Expired = @"expired";};
 
         __block NSString *o1Expired = nil;
         NSBlockOperation *o1 =
@@ -127,7 +127,7 @@ describe(@"TMPTaskCompletionManagerSpec", ^{
               [NSThread sleepForTimeInterval:3];
               o1Expired = @"done";
             }];
-        task_t e1 = ^{o1Expired = @"expired";};
+        task_t_ e1 = ^{o1Expired = @"expired";};
 
         UIBackgroundTaskIdentifier btid;
         btid = [taskCompletion
@@ -174,7 +174,7 @@ describe(@"TMPTaskCompletionManagerSpec", ^{
               [NSThread sleepForTimeInterval:5];
               o0Expired = @"done";
             }];
-        task_t e0 = ^{o0Expired = @"expired";};
+        task_t_ e0 = ^{o0Expired = @"expired";};
 
         __block NSString *o1Expired = nil;
         NSBlockOperation *o1 =
@@ -182,7 +182,7 @@ describe(@"TMPTaskCompletionManagerSpec", ^{
               [NSThread sleepForTimeInterval:5];
               o1Expired = @"done";
             }];
-        task_t e1 = ^{o1Expired = @"expired";};
+        task_t_ e1 = ^{o1Expired = @"expired";};
 
         [taskCompletion
           runBackgroundOperation:o0
